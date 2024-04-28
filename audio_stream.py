@@ -26,12 +26,11 @@ async def play_stream_async(device_name):
 
         await atv.stream.stream_file(process.stdout, metadata=metadata, override_missing_metadata=True)
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        device_name = sys.argv[1]
-        devices = asyncio.run(scan_dev())
-        for device in devices:
-            if device.name == device_name:
-                asyncio.run(play_stream_async(device.name))
-    else:
-        print("No argument was passed.")
+if len(sys.argv) > 1:
+    device_name = sys.argv[1]
+    devices = asyncio.run(scan_dev())
+    for device in devices:
+        if device.name == device_name:
+            asyncio.run(play_stream_async(device.name))
+else:
+    print("No argument was passed.")

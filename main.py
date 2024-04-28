@@ -121,14 +121,6 @@ async def check_volume():
     except Exception as e:
         print("Error:", e)
 
-def main():
-    global devices
-    devices = asyncio.run(scan_for_home_pods())
-    icon = create_tray_icon()
-    icon.run_detached()
-    asyncio.run(check_volume())
-
-
 def stop(icon):
     global STOP
     STOP = True
@@ -137,5 +129,8 @@ def stop(icon):
             device_state.process.kill()
     icon.stop()
 
-if __name__ == "__main__":
-    main()
+global devices
+devices = asyncio.run(scan_for_home_pods())
+icon = create_tray_icon()
+icon.run_detached()
+asyncio.run(check_volume())
