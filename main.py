@@ -92,7 +92,11 @@ def create_tray_icon():
 def start_audio_stream(name):
     if device_states[name].is_connected != True:
         add_seleted_device_to_audio_stream(name)
-        process = subprocess.Popen([sys.executable, __file__[:-7] + "/audio_stream.py", name])
+        if __file__.lower().endswith('.exe'):
+            audio_stream_file_ending = "exe"
+        elif __file__.lower().endswith('.py'):
+            audio_stream_file_ending = "py"
+        process = subprocess.Popen([sys.executable, __file__[:-7] + "/audio_stream." + audio_stream_file_ending, name])
         device_states[name].process = process
     else:
         device_states[name].process.kill()
