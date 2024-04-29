@@ -6,10 +6,10 @@ echo Installing PyInstaller...
 pip install pyinstaller
 
 echo Compiling main.py...
-pyinstaller --onefile --add-data="trayicon.png;." --collect-all zeroconf --noconsole .\main.py
+pyinstaller --onefile --add-data="trayicon.png;." --collect-all zeroconf --noconsole .\dist_code\main.py
 
 echo Compiling audio_stream.py...
-pyinstaller --onefile --noconsole --collect-all zeroconf .\audio_stream.py
+pyinstaller --onefile --noconsole --collect-all zeroconf .\dist_code\audio_stream.py
 
 echo Build process completed.
 
