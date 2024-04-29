@@ -19,10 +19,10 @@ del /S /Q *.spec
 echo Deleting the build folder...
 rd /s /q build
 
-set /p autostart="Do you want to move the Files in autostart? (YES/NO): "
+set /p autostart="Do you want to copy the Files in autostart? (YES/NO): "
 if /i "%autostart%"=="YES" (
     cd ./dist
-    move *.* "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+    copy *.* "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
     cd ..
 ) else if /i "%autostart%"=="NO" (
     rem
