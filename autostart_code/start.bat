@@ -1,4 +1,1 @@
-:START
-    start notepad
-
-GOTO START
+start notepad

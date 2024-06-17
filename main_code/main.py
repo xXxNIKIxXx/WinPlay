@@ -24,6 +24,7 @@ class Connected_HomePod:
         self.is_connected = False
         self.is_volume_synced = False
         self.process = None
+        self.defaut_volume = None
         self.connection = asyncio.run(connect(self.device, asyncio.new_event_loop()))
 
     def set_volume(self):
@@ -61,6 +62,8 @@ def add_seleted_device_to_volume_sync(icon, item):
     global ONE_TIME_VOLUME_CHANGE
     ONE_TIME_VOLUME_CHANGE = True
     device_states[item.__name__].toggle_volume_sync()
+
+    global VOLUME_SYNCED_DEVICES
     VOLUME_SYNCED_DEVICES.append(device_states[item.__name__])
     
 def create_tray_icon():
@@ -109,9 +112,16 @@ async def check_volume():
         while not STOP:
             if (round(volume.GetMasterVolumeLevelScalar()*100) != prev) or ONE_TIME_VOLUME_CHANGE:
                 print("Changed master volume level")
+                global VOLUME_SYNCED_DEVICES
                 for sync_device in VOLUME_SYNCED_DEVICES:
-                    atv = await connect(sync_device.device, asyncio.get_event_loop())
+                    try:
+                        print(asyncio.get_event_loop())
+                        atv = await connect(sync_device.device, asyncio.get_event_loop())
+                    except:
+                        print(asyncio.new_event_loop())
+                        atv = await connect(sync_device.device, asyncio.new_event_loop())
                     audio = atv.audio
+                    print(audio, VOLUME_SYNCED_DEVICES)
                     await audio.set_volume(round(volume.GetMasterVolumeLevelScalar()*100))
                 ONE_TIME_VOLUME_CHANGE = False
             prev = round(volume.GetMasterVolumeLevelScalar()*100)
