@@ -17,9 +17,8 @@ async def play_stream_async(device_name):
         from pyatv.interface import MediaMetadata
 
         metadata = MediaMetadata(artist="Windows", title="Streaming windows system audio")
-    
         process = await asp.create_subprocess_exec(
-            "C:\\Program Files\\ffmpeg\\ffmpeg.exe",
+            "ffmpeg",
             "-f", "dshow", "-i", "audio=Home Pod (VB-Audio Virtual Cable)",
             "-acodec", "libmp3lame", "-f", "mp3", "-", "-v", "quiet", stdout=asp.PIPE, stderr=None
         )
