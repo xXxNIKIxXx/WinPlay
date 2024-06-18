@@ -49,8 +49,9 @@ async def scan_for_home_pods():
     return sorted_devices
 
 def rescan_devices(old_icon):
+    global devices
     devices = asyncio.run(scan_for_home_pods())
-    icon = create_tray_icon(devices)
+    icon = create_tray_icon()
     icon.run_detached()
     old_icon.stop()
 
