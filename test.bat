@@ -1,3 +1,5 @@
 cd %~dp0
 
-curl https://www.python.org/ftp/python/3.8.0/python-3.8.0-amd64.exe --output ./python-3.8.0-amd64.exe
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
