@@ -7,6 +7,27 @@ from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import sys
 
+import pyaudio
+from install_vb_cable import install_window
+
+# Initialize PyAudio
+p = pyaudio.PyAudio()
+
+vb_cables_devices = []
+
+# List all available input devices
+for i in range(p.get_device_count()):
+    device_info = p.get_device_info_by_index(i)
+    if device_info['maxInputChannels'] > 0:
+        if device_info['name'].__contains__("(VB-Audio Virtual Cable)"):
+            vb_cables_devices.append(device_info['name'])
+
+vb_cables_devices = list(set(vb_cables_devices))
+
+if len(vb_cables_devices) == 0:
+    install_window()
+    exit()
+
 #TODO: ADD SOUND RETURNING TO DEFAULT
 
 ONE_TIME_VOLUME_CHANGE = False

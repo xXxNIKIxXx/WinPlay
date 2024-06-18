@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+       .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.install {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        button.ignore {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Welcome to My Website</h1>
+<p>This is a sample text on my website.</p>
+
+<div class="button-container">
+    <button class="install" data-action="install">Install</button>
+    <button class="ignore" data-action="ignore">Ignore</button>
+</div>
+
+</body>
+</html>

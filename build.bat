@@ -17,7 +17,7 @@ echo objShell.Run WScript.Arguments(0), 0, False >> invisible.vbs
 
 echo wscript.exe ".\invisible.vbs" ".\start.bat" > WinPlay_start.bat
 
-echo c:/Development/WinPlay/venv/Scripts/python.exe c:/Development/WinPlay/main.py > start.bat
+echo c:/Development/WinPlay/venv/Scripts/python.exe c:/Development/WinPlay/WinPlay/main.py > start.bat
 
 echo DONE
 
