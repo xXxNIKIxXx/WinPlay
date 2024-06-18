@@ -1,1 +1,1 @@
-c:/Development/WinPlay/venv/Scripts/python.exe c:/Development/WinPlay/main_code/main.py 
+c:/Development/WinPlay/venv/Scripts/python.exe c:/Development/WinPlay/main.py 

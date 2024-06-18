@@ -9,8 +9,6 @@ if exist "AutoStart" (
     echo AutoStart directory does not exist.
 )
 
-pause
-
 mkdir AutoStart
 cd AutoStart
 
@@ -19,8 +17,8 @@ echo objShell.Run WScript.Arguments(0), 0, False >> invisible.vbs
 
 echo wscript.exe ".\invisible.vbs" ".\start.bat" > WinPlay_start.bat
 
-echo c:/Development/WinPlay/venv/Scripts/python.exe c:/Development/WinPlay/main_code/main.py > start.bat
+echo c:/Development/WinPlay/venv/Scripts/python.exe c:/Development/WinPlay/main.py > start.bat
+
+echo DONE
 
 pause
-
-./WinPlay_start.bat
