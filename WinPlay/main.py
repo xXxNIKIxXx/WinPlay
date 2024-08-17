@@ -105,12 +105,15 @@ def start_audio_stream(name):
 async def check_volume():
     try:
         print("Master volume listener started")
+        global ONE_TIME_VOLUME_CHANGE
         audio_devices = AudioUtilities.GetSpeakers()
         interface = audio_devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
         volume = interface.QueryInterface(IAudioEndpointVolume)
-        prev = volume.GetMasterVolumeLevelScalar()*100
-        global ONE_TIME_VOLUME_CHANGE
+        prev = round(volume.GetMasterVolumeLevelScalar()*100)
         while not STOP:
+            audio_devices = AudioUtilities.GetSpeakers()
+            interface = audio_devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+            volume = interface.QueryInterface(IAudioEndpointVolume)
             if (round(volume.GetMasterVolumeLevelScalar()*100) != prev) or ONE_TIME_VOLUME_CHANGE:
                 print("Changed master volume level")
                 global VOLUME_SYNCED_DEVICES
