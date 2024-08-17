@@ -1,52 +1,30 @@
-import webview
-import os
-import zipfile
-import requests
 import subprocess
-import shutil
-from pyuac import main_requires_admin
+import webview
 
+def reboot_windows():
+    """
+    Reboots the Windows machine.
+    """
+    try:
+        # Construct the shutdown command to reboot the computer
+        command = "shutdown /r /t 0"
+        
+        # Execute the command
+        subprocess.run(command, shell=True, check=True)
+        print("Reboot initiated. Please wait for the reboot to complete.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to reboot Windows: {e}")
+        
 global window
 window = None
 
 def click_handler(e):
     if e.get("target").get("attributes").get("data-action") == "install":
-        install()
+        reboot_windows()
     else:
         global window
         window.destroy()
 
-def install():
-    url = "https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack43.zip"
-    
-    save_dir = "./VBCABLE_Driver_Pack43"
-    os.makedirs(save_dir, exist_ok=True)
-
-    response = requests.get(url)
-    with open(os.path.join(save_dir, "VBCABLE_Driver_Pack43.zip"), "wb") as f:
-        f.write(response.content)
-
-    with zipfile.ZipFile(os.path.join(save_dir, "VBCABLE_Driver_Pack43.zip"), 'r') as zip_ref:
-        zip_ref.extractall(save_dir)
-
-    exe_path = os.path.join(save_dir, "VBCABLE_Setup_x64.exe")
-
-    if os.path.exists(exe_path):
-        print(f"Starting {exe_path}...")
-        subprocess.run([exe_path], check=True)
-    else:
-        print(f"{exe_path} not found.")
-
-    try:
-        shutil.rmtree(save_dir, ignore_errors=True)
-        print("Directory removed successfully.")
-    except Exception as e:
-        print(f"Failed to remove directory: {e}")
-
-    print("Process completed.")
-    
-    global window
-    window.destroy()
 
 def bind(window):
     install_button = window.dom.get_element('.install')
@@ -55,13 +33,12 @@ def bind(window):
     install_button.events.click += click_handler
     ignore_button.events.click += click_handler
 
-@main_requires_admin
-def install_window():
+def reboot_window():
     global window
     window = webview.create_window(
-        'Virtual Audio Cable Install', 
+        'Reboot', 
         html="""
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -70,13 +47,19 @@ def install_window():
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
             background-color: #f0f0f0;
+            overflow: hidden;
         }
         h1 {
             color: #333;
         }
+        
+        .text-container {
+            height: 85vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
        .button-container {
             display: flex;
             justify-content: space-between;
@@ -99,18 +82,21 @@ def install_window():
     </style>
 </head>
 <body>
-
-<h1>Welcome to My Website</h1>
-<p>This is a sample text on my website.</p>
-
-<div class="button-container">
-    <button class="install" data-action="install">Install</button>
-    <button class="ignore" data-action="ignore">Ignore</button>
+    <div class="cont">
+<div class="text-container">
+<h1>Do you want to Rebbot?</h1>
+<p>You have to reboot your PC, because new software has been installed. In order to ensure that everything is working a reboot is required.</p>
 </div>
-
+<div class="button-container">
+    <button class="install" data-action="install">Reboot</button>
+    <button class="ignore" data-action="ignore">Reboot Later</button>
+</div>
+</div>
 </body>
 </html>
 
         """, draggable=False, resizable=False
     )
     webview.start(bind, window)
+
+reboot_window()

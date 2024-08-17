@@ -3,16 +3,6 @@ import requests
 import zipfile
 import shutil
 
-def list_all_files(directory):
-    """
-    List all files in the specified directory.
-    
-    :param directory: Path to the directory to list files from.
-    :return: A list of filenames.
-    """
-    return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
-
-
 def install():
     url = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip"
     
