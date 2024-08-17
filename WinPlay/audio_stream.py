@@ -1,48 +1,50 @@
 import sys
 import asyncio
-from pyatv import scan
+from pyatv import scan, interface
 import asyncio.subprocess as asp
 from pyatv import scan, connect
 from pyatv.const import Protocol
 
-from install_vb_cable import install_window
 
-import pyaudio
+import subprocess
 
-# Initialize PyAudio
-p = pyaudio.PyAudio()
+result = subprocess.run(['ffmpeg', '-list_devices', 'true', '-f', 'dshow', '-i', 'dummy'], capture_output=True, text=True)
 
-vb_cables_devices = []
+output_device = ""
 
-# List all available input devices
-for i in range(p.get_device_count()):
-    device_info = p.get_device_info_by_index(i)
-    if device_info['maxInputChannels'] > 0:
-        if device_info['name'].__contains__("(VB-Audio Virtual Cable)"):
-            vb_cables_devices.append(device_info['name'])
-
-vb_cables_devices = list(set(vb_cables_devices))
+for i in range(len(result.stderr.split("\n"))):
+    print(i)
+    if result.stderr.split("\n")[i].__contains__("(VB-Audio Virtual Cable)"):
+        output_device = result.stderr.split("\n")[i+1].split('"')[1]
 
 
 async def scan_dev():
     devices = await scan(loop=asyncio.get_event_loop())
     return devices
 
+class MyAudioListener(interface.AudioListener):
+
+    def volume_update(self, old_level, new_level):
+        print('Volume level changed from {0:f} to {1:f}'.format(old_level, new_level))
+
 async def play_stream_async(device_name):
     print("Connected to:", device.name)
     if device.name == device_name:
         atv = await connect(device, asyncio.get_event_loop())
-    
+        
+        listener = MyAudioListener()
+        atv.audio.listener = listener
+        
         from pyatv.interface import MediaMetadata
 
         metadata = MediaMetadata(artist="Windows", title="Streaming windows system audio")
         process = await asp.create_subprocess_exec(
             "ffmpeg",
-            "-f", "dshow", "-i", "audio=" + vb_cables_devices[0] + "",
-            "-acodec", "libmp3lame", "-f", "mp3", "-", "-v", "quiet", stdout=asp.PIPE, stderr=None
+            "-f", "dshow", "-i", "audio=" + output_device,
+            "-acodec", "libmp3lame", "-f", "mp3", "-", "-v", "quiet", stdin=None, stdout=asp.PIPE, stderr=None
         )
 
-        await atv.stream.stream_file(process.stdout, metadata=metadata, override_missing_metadata=True)
+        await atv.stream.stream_file(process.stdout)
 
 if len(sys.argv) > 1:
     device_name = sys.argv[1]
