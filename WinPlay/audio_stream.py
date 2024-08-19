@@ -8,7 +8,9 @@ from pyatv.const import Protocol
 
 import subprocess
 
-result = subprocess.run(['ffmpeg', '-list_devices', 'true', '-f', 'dshow', '-i', 'dummy'], capture_output=True, text=True)
+print(subprocess.run(['ffmpeg.exe'], capture_output=True, text=True, shell=True))
+
+result = subprocess.run(['./ffmpeg.exe', '-list_devices', 'true', '-f', 'dshow', '-i', 'dummy'], capture_output=True, text=True, shell=True)
 
 output_device = ""
 
@@ -29,7 +31,7 @@ async def play_stream_async(device_name):
 
         print(output_device)
         process = await asp.create_subprocess_exec(
-            "ffmpeg",
+            "./ffmpeg.exe",
             "-f", "dshow", "-i", "audio=" + "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{7BA32019-AD16-44D6-9403-721012116A7B}",
             "-acodec", "libmp3lame", "-f", "mp3", "-", "-v", "quiet", stdin=None, stdout=asp.PIPE, stderr=None
         )

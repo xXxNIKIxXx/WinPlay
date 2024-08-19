@@ -2,3 +2,4 @@ __pycache__
 .venv/
 AutoStart/
 temp/
+ffmpeg.exe
