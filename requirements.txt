@@ -1,5 +1,5 @@
 aiohappyeyeballs==2.3.6
-aiohttp==3.10.3
+aiohttp==3.10.11
 aiosignal==1.3.1
 annotated-types==0.7.0
 async-timeout==4.0.3
@@ -11,7 +11,7 @@ chacha20poly1305-reuseable==0.13.2
 charset-normalizer==3.3.2
 clr-loader==0.2.6
 comtypes==1.4.6
-cryptography==43.0.0
+cryptography==43.0.1
 decorator==5.1.1
 frozenlist==1.4.1
 idna==3.7
