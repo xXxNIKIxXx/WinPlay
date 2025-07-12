@@ -21,7 +21,7 @@ miniaudio==1.61
 multidict==6.0.5
 mutagen==1.47.0
 pillow==10.4.0
-protobuf==5.27.3
+protobuf==5.29.5
 proxy_tools==0.1.0
 psutil==6.0.0
 pyatv==0.14.5
@@ -33,12 +33,12 @@ pystray==0.19.5
 pythonnet==3.0.3
 pyuac==0.0.3
 pywebview==5.1
-requests==2.32.3
+requests==2.32.4
 six==1.16.0
 srptools==1.0.1
 tabulate==0.9.0
 tee==0.0.3
 typing_extensions==4.12.2
-urllib3==2.2.2
+urllib3==2.5.0
 yarl==1.9.4
 zeroconf==0.132.2
