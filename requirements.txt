@@ -21,7 +21,7 @@ miniaudio==1.61
 multidict==6.0.5
 mutagen==1.47.0
 pillow==10.4.0
-protobuf==5.27.3
+protobuf==6.33.5
 proxy_tools==0.1.0
 psutil==6.0.0
 pyatv==0.14.5
