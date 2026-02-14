@@ -11,7 +11,7 @@ chacha20poly1305-reuseable==0.13.2
 charset-normalizer==3.3.2
 clr-loader==0.2.6
 comtypes==1.4.6
-cryptography==43.0.0
+cryptography==46.0.5
 decorator==5.1.1
 frozenlist==1.4.1
 idna==3.7
@@ -20,7 +20,7 @@ mediafile==0.12.0
 miniaudio==1.61
 multidict==6.0.5
 mutagen==1.47.0
-pillow==10.4.0
+pillow==12.1.1
 protobuf==5.27.3
 proxy_tools==0.1.0
 psutil==6.0.0
